@@ -63,7 +63,7 @@ public class MainActivity extends ActionBarActivity {
             File path = Environment.getExternalStoragePublicDirectory(
                     Environment.DIRECTORY_DOCUMENTS);
             File file = new File(path, "contacts_bu_.txt");
-            if (isExternalStorageReadable() && file.exists()) {
+            if (isExternalStorageReadable() && isExternalStorageWritable() && file.exists()) {
 
                 url = urlFormatContacts(getContactsFileContent(file));
 
@@ -147,8 +147,10 @@ public class MainActivity extends ActionBarActivity {
                 break;
             }
             splitted = line.split("\t");
-            url = url.concat(splitted[0]).concat("__").
-                    concat(splitted[1]).concat("__").concat(splitted[2]).concat("||");
+            if (splitted.length == 2) {
+                url = url.concat(splitted[0]).concat("__").
+                        concat(splitted[1]).concat("||");
+            }
         }
         return url.substring(0, url.length() - 2);
 
